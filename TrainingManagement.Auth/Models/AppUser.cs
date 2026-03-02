@@ -17,9 +17,9 @@ public class AppUser : IdentityUser
         MiddleName = middleName;
 
     }
-    private AppUser()
+    public AppUser()
     {
-        
+
     }
 
 

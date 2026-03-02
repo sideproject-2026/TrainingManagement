@@ -6,8 +6,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using TrainingManagement.Auth.Contracts;
 using TrainingManagement.Auth.Models;
 using TrainingManagement.Auth.Persistence;
+using TrainingManagement.Auth.Services;
 
 namespace TrainingManagement.Auth.Commons.Extensions;
 
@@ -65,6 +67,8 @@ public static class AuthServiceExtension
             });
 
         services.AddAuthorization();
+
+        services.AddScoped<IAuthService, AuthService>();
 
         return services;
     }  
