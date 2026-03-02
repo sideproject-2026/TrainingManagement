@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="TrainingManagement.AppHost/TrainingManagement.AppHost.csproj" />
+  <Project Path="TrainingManagement.ServiceDefaults/TrainingManagement.ServiceDefaults.csproj" />
+  <Project Path="TrainingManagement.WebAPI/TrainingManagement.WebAPI.csproj" />
+</Solution>
