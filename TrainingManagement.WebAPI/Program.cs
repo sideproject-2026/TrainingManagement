@@ -13,9 +13,24 @@ builder.Services.AddOpenApi();
 builder.Services.AddTMAuthService(builder.Configuration);
 
 builder.Services.AddCarter();
+
+//setup CORS for http://locaolhost:3000
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp",
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:3000")
+                   .AllowAnyHeader()
+                   .AllowAnyMethod();
+        });
+});
+
 var app = builder.Build();
 
 app.MapDefaultEndpoints();
+
+
 
 
 
@@ -29,6 +44,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowReactApp");
 
 app.UseAuthentication();
 app.UseAuthorization();

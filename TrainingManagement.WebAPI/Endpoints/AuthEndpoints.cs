@@ -30,6 +30,6 @@ public class AuthEndpoints : ICarterModule
                 result.Token!,
                 result.Data?.UserName ?? string.Empty,
                 result.ExpiresAt?.UtcDateTime ?? DateTime.MinValue));
-        });
+        }).AllowAnonymous();
     }
 }
