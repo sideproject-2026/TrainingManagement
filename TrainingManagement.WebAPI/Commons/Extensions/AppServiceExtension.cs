@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TrainingManagement.Auth.Persistence;
-using TrainingManagement.Auth.Persistence.Seeds;
 
 namespace TrainingManagement.WebAPI.Commons.Extensions;
 
@@ -24,9 +23,8 @@ public static class AppServiceExtension
         }
         catch (Exception ex)
         {
-            // Log the error (you can use your logging framework here)
-            Console.WriteLine($"An error occurred while migrating the database: {ex.Message}");
-            throw; // Re-throw the exception after logging
+            app.Logger.LogError(ex, "An error occurred while migrating the database");
+            throw;
         }
     }
 }
