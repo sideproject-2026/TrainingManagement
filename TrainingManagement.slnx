@@ -1,4 +1,11 @@
 <Solution>
+  <Folder Name="/Services/">
+    <Project Path="TrainingManagement.Auth/TrainingManagement.Auth.csproj" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+  </Folder>
   <Project Path="TrainingManagement.AppHost/TrainingManagement.AppHost.csproj" />
   <Project Path="TrainingManagement.ServiceDefaults/TrainingManagement.ServiceDefaults.csproj" />
   <Project Path="TrainingManagement.WebAPI/TrainingManagement.WebAPI.csproj" />
