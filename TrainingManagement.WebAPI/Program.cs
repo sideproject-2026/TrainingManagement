@@ -18,11 +18,11 @@ builder.Services.AddCarter();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp",
-        builder =>
+        policyBuilder =>
         {
-            builder.WithOrigins("http://localhost:3000")
-                   .AllowAnyHeader()
-                   .AllowAnyMethod();
+            policyBuilder.WithOrigins("http://localhost:3000")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
         });
 });
 
