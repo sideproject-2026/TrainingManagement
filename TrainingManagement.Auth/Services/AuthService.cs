@@ -137,7 +137,7 @@ namespace TrainingManagement.Auth.Services
                 CreatedAt = DateTimeOffset.UtcNow
             };
 
-            storedToken.RevokedAt = DateTimeOffset.UtcNow;
+            _dbContext.RefreshTokens.Remove(storedToken);
 
             await RemoveExpiredTokensAsync(user.Id, ct);
             _dbContext.RefreshTokens.Add(newRefreshToken);
