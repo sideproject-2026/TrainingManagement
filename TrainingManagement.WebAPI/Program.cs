@@ -1,7 +1,7 @@
 using Carter;
 using Scalar.AspNetCore;
 using TrainingManagement.Auth.Commons.Extensions;
-using TrainingManagement.Auth.Persistence.Seeds;
+using TrainingManagement.WebAPI.Commons.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,16 +31,12 @@ var app = builder.Build();
 app.MapDefaultEndpoints();
 
 
-
-
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
     app.MapScalarApiReference();
-    // Seed Identity data (roles, admin user)
-    await DataSeed.SeedAsync(app.Services);
+    await app.UseAuthMigration();
 }
 
 app.UseHttpsRedirection();

@@ -1,9 +1,7 @@
 ﻿using Carter;
-
 using Microsoft.AspNetCore.Mvc;
 using TrainingManagement.Auth.Contracts;
 using TrainingManagement.WebAPI.Commons.Dtos;
-using Microsoft.AspNetCore.Http;
 
 namespace TrainingManagement.WebAPI.Endpoints;
 
@@ -14,22 +12,49 @@ public class AuthEndpoints : ICarterModule
         var appGroup = app.MapGroup("/api/auth")
             .WithTags("Authentication");
 
-        appGroup.MapPost("/", async (
-            [FromBody] AuthRequest request,
-            [FromServices] IAuthService service,
-            CancellationToken ct = default) =>
+        appGroup.MapPost("/", HandleLoginAsync)
+            .AllowAnonymous();
+        appGroup.MapPost("/refresh", HandleRefreshAsync)
+            .AllowAnonymous(); // Ensure this endpoint is also anonymous
+    }
+
+    private static async Task<IResult> HandleLoginAsync(
+        [FromBody] AuthRequest request,
+        [FromServices] IAuthService service,
+        CancellationToken ct = default)
+    {
+        var result = await service.LoginAsync(request.UserName, request.Password, ct);
+
+        if (result.Failed)
         {
-            var result = await service.LoginAsync(request.UserName, request.Password, ct);
+            return Results.BadRequest(result.Errors);
+        }
 
-            if (result.Failed)
-            {
-                return Results.BadRequest(result.Errors);
-            }
+        return Results.Ok(new AuthResponse(
+            result.Token!,
+            result.Data?.UserName ?? string.Empty,
+            result.ExpiresAt?.UtcDateTime ?? DateTime.MinValue,
+            result.RefreshToken ?? string.Empty,
+            result.RefreshExpiresAt?.UtcDateTime ?? DateTime.MinValue));
+    }
 
-            return Results.Ok(new AuthResponse(
-                result.Token!,
-                result.Data?.UserName ?? string.Empty,
-                result.ExpiresAt?.UtcDateTime ?? DateTime.MinValue));
-        }).AllowAnonymous();
+    private static async Task<IResult> HandleRefreshAsync(
+        [FromBody] RefreshTokenRequest request,
+        [FromServices] IAuthService service,
+        CancellationToken ct = default)
+    {
+        var result = await service.RefreshTokenAsync(request.Token, request.RefreshToken, ct);
+
+        if (result.Failed)
+        {
+            return Results.BadRequest(result.Errors);
+        }
+
+        return Results.Ok(new AuthResponse(
+            result.Token!,
+            result.Data?.UserName ?? string.Empty,
+            result.ExpiresAt?.UtcDateTime ?? DateTime.MinValue,
+            result.RefreshToken ?? string.Empty,
+            result.RefreshExpiresAt?.UtcDateTime ?? DateTime.MinValue));
     }
 }
