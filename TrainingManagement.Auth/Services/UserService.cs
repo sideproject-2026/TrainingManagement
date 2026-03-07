@@ -7,7 +7,7 @@ namespace TrainingManagement.Auth.Services;
 
 internal class UserService(UserManager<AppUser> userManager) : IUserService
 {
-    public async Task<Result<AppUser>> SignUp(AppUser user,string password)
+    public async Task<Result<AppUser>> SignUpAsync(AppUser user,string password)
     {
         var result = await userManager.CreateAsync(user, password);
         if(!result.Succeeded)

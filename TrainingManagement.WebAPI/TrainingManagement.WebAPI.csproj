@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TrainingManagement.Auth\TrainingManagement.Auth.csproj" />
+    <ProjectReference Include="..\TrainingManagement.Center\TrainingManagement.Center.csproj" />
     <ProjectReference Include="..\TrainingManagement.ServiceDefaults\TrainingManagement.ServiceDefaults.csproj" />
   </ItemGroup>
 

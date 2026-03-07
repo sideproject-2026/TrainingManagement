@@ -5,5 +5,5 @@ namespace TrainingManagement.Auth.Contracts;
 
 public interface IUserService
 {
-    public Task<Result<AppUser>> SignUp(AppUser user,string password);
+    public Task<Result<AppUser>> SignUpAsync(AppUser user,string password);
 }
