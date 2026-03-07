@@ -1,0 +1,17 @@
+# For more info on HTTP files go to https://aka.ms/vs/httpfile
+
+@TrainingManagement.WebAPI_HostAddress = http://localhost:5123/api/users
+
+### Sign Up
+POST {{TrainingManagement.WebAPI_HostAddress}}/create
+Content-Type: application/json
+
+{
+  "email": "admin@wimas.com",
+  "fullName": "Admin",
+  "password": "P@ssw0rd!",
+  "trainingCenterId": "a67d1831-1c9b-4fb0-9fae-9dd5cf1f4590",
+  "userCode": "admin-01",
+  "userName": "admin"
+
+}

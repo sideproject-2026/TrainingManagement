@@ -35,11 +35,9 @@ public static class DataSeed
                 UserName = adminUserName,
                 Email = adminEmail,
                 EmailConfirmed = true,
-                EmployeeCode = "ADM001",
-                FirstName = "System",
-                LastName = "Administrator",
-                MiddleName = string.Empty,
-                Company = "Training"
+                UserCode = "ADM001",
+                FullName = "System Administrator",
+                TainingCenterId = Guid.NewGuid()
             };
 
             var createResult = await userManager.CreateAsync(adminUser, adminPassword);

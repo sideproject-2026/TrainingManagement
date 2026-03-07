@@ -1,20 +1,20 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using TrainingManagement.Auth.Commons.Enums;
 
 namespace TrainingManagement.Auth.Models;
 
 public class AppUser : IdentityUser
 {
 
-    private static AppUser Create(string userName, string employeeCode, string firstName, string lastName, string middleName, string company) 
-        => new(userName, employeeCode, firstName, lastName, middleName, company);
+    public static AppUser Create(string userName,string email, string userCode, string fullName, Guid trainingCenterId) 
+        => new(userName, email, userCode, fullName, trainingCenterId);
 
-    private AppUser(string userName,string employeeCode, string firstName,string lastName,string middleName,string company) : base(userName)
+    private AppUser(string userName,string email,string userCode, string fullName,Guid trainingCenterId) : base(userName)
     {
-        EmployeeCode = employeeCode;
-        Company = company;
-        FirstName = firstName;
-        LastName = lastName;
-        MiddleName = middleName;
+        Email = email;
+        UserCode = userCode;
+        TainingCenterId = trainingCenterId;
+        FullName = fullName;
 
     }
     public AppUser()
@@ -22,10 +22,8 @@ public class AppUser : IdentityUser
 
     }
 
-
-    public string EmployeeCode { get; set; } = default!;
-    public string FirstName { get; set; } = default!;
-    public string LastName { get; set; } = default!;
-    public string MiddleName { get; set; } = default!;
-    public string Company { get; set; } = default!;
+    public UserType UserType { get; set; }
+    public string UserCode { get; set; } = default!;
+    public string FullName { get; set; } = default!;
+    public Guid TainingCenterId { get; set; }
 }
