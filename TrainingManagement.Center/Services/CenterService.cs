@@ -21,14 +21,9 @@ internal class CenterService(CenterDbContext context) : ICenterService
 
     public async Task<Result> DeleteAsync(Guid trainingCenterId, CancellationToken ct = default)
     {
-        context.Database.BeginTransaction();
-
         await context.TrainingCenters
                 .Where(c => c.Id == trainingCenterId)
                 .ExecuteDeleteAsync(ct);
-
-        context.Database.CommitTransaction();
-
         return Result.Success();
     }
 
