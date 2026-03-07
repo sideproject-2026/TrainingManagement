@@ -23,6 +23,9 @@ public class AuthEndpoints : ICarterModule
         [FromServices] IAuthService service,
         CancellationToken ct = default)
     {
+       
+        
+
         var result = await service.LoginAsync(request.UserName, request.Password, ct);
 
         if (result.Failed)
@@ -42,7 +45,8 @@ public class AuthEndpoints : ICarterModule
         [FromBody] RefreshTokenRequest request,
         [FromServices] IAuthService service,
         CancellationToken ct = default)
-    {
+    {   
+
         var result = await service.RefreshTokenAsync(request.Token, request.RefreshToken, ct);
 
         if (result.Failed)
@@ -57,4 +61,6 @@ public class AuthEndpoints : ICarterModule
             result.RefreshToken ?? string.Empty,
             result.RefreshExpiresAt?.UtcDateTime ?? DateTime.MinValue));
     }
+
+   
 }

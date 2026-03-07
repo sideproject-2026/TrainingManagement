@@ -10,8 +10,9 @@ builder.AddServiceDefaults();
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-builder.Services.AddTMAuthService(builder.Configuration);
-
+builder.Services
+    .AddTMAuthService(builder.Configuration);
+builder.Services.AddValidation();
 builder.Services.AddCarter();
 
 //setup CORS for http://locaolhost:3000

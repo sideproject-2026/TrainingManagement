@@ -1,0 +1,21 @@
+# For more info on HTTP files go to https://aka.ms/vs/httpfile
+
+@TrainingManagement.WebAPI_HostAddress = http://localhost:5123
+
+### Login
+POST {{TrainingManagement.WebAPI_HostAddress}}/api/auth
+Content-Type: application/json
+
+{
+  "userName": "admin",
+  "password": "P@ssw0rd!"
+}
+
+### Refresh Token
+POST {{TrainingManagement.WebAPI_HostAddress}}/api/auth/refresh
+Content-Type: application/json
+
+{
+  "token": "{{access_token}}",
+  "refreshToken": "{{refresh_token}}"
+}

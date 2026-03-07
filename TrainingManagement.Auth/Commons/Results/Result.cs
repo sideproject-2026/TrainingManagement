@@ -52,7 +52,7 @@ public sealed class Result<T> : Result
     public static Result<T> Success(T value, HttpStatusCode statusCode = HttpStatusCode.OK)
         => new(value, statusCode, Array.Empty<string>(), true);
 
-    public static Result<T> Fail(HttpStatusCode statusCode = HttpStatusCode.BadRequest, params string[] errors)
+    public static new Result<T> Fail(HttpStatusCode statusCode = HttpStatusCode.BadRequest, params string[] errors)
     {
         var normalizedErrors = errors is { Length: > 0 }
             ? errors
