@@ -1,6 +1,11 @@
 <Solution>
+  <Folder Name="/BuildingBlocks/">
+    <Project Path="BuildingBlock.Domain/BuildingBlock.Domain.csproj" Id="0b693b73-5a2e-488f-8d83-e9552bd77757" />
+    <Project Path="BuildingBlock.Util/BuildingBlock.Util.csproj" Id="f8bdba5e-915a-4232-9150-790fb5dbaafe" />
+  </Folder>
   <Folder Name="/Services/">
     <Project Path="TrainingManagement.Auth/TrainingManagement.Auth.csproj" />
+    <Project Path="TrainingManagement.Center/TrainingManagement.Center.csproj" Id="3226ebf6-6671-4f65-86b4-c783e0efff15" />
   </Folder>
   <Folder Name="/Solution Items/">
     <File Path="Directory.Build.props" />

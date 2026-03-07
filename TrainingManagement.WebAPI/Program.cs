@@ -2,6 +2,7 @@ using Carter;
 using Scalar.AspNetCore;
 using TrainingManagement.Auth.Commons.Extensions;
 using TrainingManagement.WebAPI.Commons.Extensions;
+using TrainingManagement.Center.Commons.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,8 +11,11 @@ builder.AddServiceDefaults();
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
 builder.Services
-    .AddTMAuthService(builder.Configuration);
+    .AddTMAuthService(builder.Configuration)
+    .AddCenterService(builder.Configuration);
+
 builder.Services.AddValidation();
 builder.Services.AddCarter();
 
@@ -37,7 +41,9 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
     app.MapScalarApiReference();
+
     await app.UseAuthMigration();
+    await app.UseCenterMigration();
 }
 
 app.UseHttpsRedirection();
