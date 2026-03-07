@@ -82,7 +82,7 @@ internal class CenterService(CenterDbContext context) : ICenterService
         else
         {
             var data = await query.ToListAsync(ct);
-            return new QueryResult<TrainingCenter>(data, data.Count);
+            return new QueryResult<TrainingCenter>(data, 1);
             
         }
     }
