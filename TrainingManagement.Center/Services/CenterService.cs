@@ -38,11 +38,32 @@ internal class CenterService(CenterDbContext context) : ICenterService
 
         if (filterParam.Filters != null)
         {
+            var entityType = context.Model.FindEntityType(typeof(TrainingCenter));
+
             foreach (var filter in filterParam.Filters)
             {
-                // Apply filters to the query based on the filter key and value
-                // This is a simplified example, you may need to handle different data types and operators
-                query = query.Where(tc => EF.Property<string>(tc, filter.Key).Contains(filter.Value.ToString()));
+                if (string.IsNullOrWhiteSpace(filter.Key))
+                {
+                    // Skip filters with no valid key
+                    continue;
+                }
+
+                var property = entityType?.FindProperty(filter.Key);
+                if (property == null || property.ClrType != typeof(string))
+                {
+                    // Skip unknown properties or non-string properties to avoid runtime exceptions
+                    continue;
+                }
+
+                var filterValue = filter.Value?.ToString();
+                if (string.IsNullOrEmpty(filterValue))
+                {
+                    // Skip filters with null or empty values to avoid Contains(null)
+                    continue;
+                }
+
+                var filterKey = filter.Key;
+                query = query.Where(tc => EF.Property<string>(tc, filterKey).Contains(filterValue));
             }
         }
 
