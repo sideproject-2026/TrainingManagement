@@ -7,14 +7,14 @@ namespace BuildingBlock.Util.Commons.Parameters;
 public class FilterParam
 {
     public static FilterParam Default => new FilterParam() { 
-        PageNumber = 10,
-        PageSize = 1,
+        PageNumber = 1,
+        PageSize = 10,
         IsPaginate = true,
     };
 
     public static FilterParam NoPaginateDefault => new FilterParam() { 
-        PageNumber = 10,
-        PageSize = 1,
+        PageNumber = 1,
+        PageSize = 10,
         IsPaginate = false,
     };
     public FilterParam() { }
