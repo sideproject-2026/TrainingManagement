@@ -2,7 +2,7 @@
 
 namespace TrainingManagement.WebAPI.Commons.Dtos;
 
-public class TrainingCenterRequest()
+public class TrainingCenterRequest
 {
     [Required(ErrorMessage = "Name is required.")]
     public string Name { get; set; } = default!;
