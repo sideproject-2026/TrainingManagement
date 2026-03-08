@@ -14,8 +14,11 @@ public class TrainingCenterEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var appGroup = app.MapGroup("/api/centers")
-       .WithTags("Training Center");
+        var version = app.NewVersionedApi();
+        var appGroup = version
+                .MapGroup("/api/v{version:apiVersion}/centers")
+                .HasApiVersion(1.0)
+                .WithTags("Training Center");
 
 
         appGroup.MapPost("/create", HandleCreateAsync);
@@ -37,6 +40,7 @@ public class TrainingCenterEndpoint : ICarterModule
         [FromServices] IUserService userService,
         CancellationToken ct = default)
     {
+        
         var trainingCenter = TrainingCenter
                                 .CreateNew(
                                     request.Name,
