@@ -10,4 +10,12 @@ namespace TrainingManagement.Auth.Commons.Enums
         Student,
         Trainer,
     }
+
+    public enum RoleType {
+        Admin,
+        SuperAdmin,
+        User,
+        Student,
+        Trainer,
+    }
 }

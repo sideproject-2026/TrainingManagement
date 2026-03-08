@@ -22,7 +22,8 @@ public class UserEndpoint : ICarterModule
         CancellationToken ct = default)
     {
         var appUser = AppUser.Create(request.UserName,request.Email, request.UserCode, request.FullName, request.TrainingCenterId);
-        var result = await service.SignUpAsync(appUser, request.Password);
+        //default user
+        var result = await service.SignUpAsync(appUser, request.Roles, request.Password);
         
         if (result.Failed)
         {
