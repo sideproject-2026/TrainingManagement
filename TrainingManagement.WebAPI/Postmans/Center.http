@@ -1,11 +1,11 @@
-@TrainingManagement.WebAPI_HostAddress = http://localhost:5123/api/centers
+@TrainingManagement.WebAPI_HostAddress = http://localhost:5123/api/v1/centers
 
 POST {{TrainingManagement.WebAPI_HostAddress}}/create
 Accept: application/json
 Content-Type: application/json
 
 {
-    "code": "STIMC",
+    "code": "WIMASMC",
     "email": "admin@wimas.com",
     "name": "WIMAS Marine Center",
     "address": "123 Main St",

@@ -16,5 +16,6 @@ public record UserRequest(
     [property: NotEmptyGuid(ErrorMessage = "Training center ID cannot be empty.")]
     Guid TrainingCenterId,
     [property: Required(ErrorMessage = "Password is required.")]
-    string Password);
-
+    string Password,
+    [property: Required(ErrorMessage = "Roles are required.")]
+    List<string> Roles);

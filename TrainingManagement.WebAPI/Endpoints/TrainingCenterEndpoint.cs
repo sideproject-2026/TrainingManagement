@@ -2,6 +2,7 @@
 using BuildingBlock.Util.Commons.Results;
 using Carter;
 using Microsoft.AspNetCore.Mvc;
+using TrainingManagement.Auth.Commons.Enums;
 using TrainingManagement.Auth.Contracts;
 using TrainingManagement.Auth.Models;
 using TrainingManagement.Center.Contracts;
@@ -64,7 +65,8 @@ public class TrainingCenterEndpoint : ICarterModule
         
         var newUser = AppUser.Create(defaultUser, trainingCenter.Email, userCode, $"Admin-{trainingCenter.Code}", trainingCenterId);
 
-        var userResult = await userService.SignUpAsync(newUser, defaultPassword);
+        var roles = new List<string> { RoleType.Admin.ToString() };
+        var userResult = await userService.SignUpAsync(newUser, roles, defaultPassword);
         if(userResult.Failed)
         {
             //rollback training center creation

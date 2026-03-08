@@ -7,8 +7,8 @@ POST {{TrainingManagement.WebAPI_HostAddress}}/api/v1/auth
 Content-Type: application/json
 
 {
-  "userName": "Admin@STIMC.com",
-  "password": "AdminSTIMC@123"
+  "userName": "Admin@WIMASMC.com",
+  "password": "AdminWIMASMC@123"
 }
 
 ### Refresh Token
@@ -19,3 +19,6 @@ Content-Type: application/json
   "token": "{{access_token}}",
   "refreshToken": "{{refresh_token}}"
 }
+
+
+### Validate Token

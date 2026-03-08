@@ -33,6 +33,10 @@ namespace TrainingManagement.Auth.Services
                 return LoginResult<AppUser>.Fail("Invalid credentials.");
             }
 
+           //add user claim 
+           var claims = await _userManager.GetClaimsAsync(user);
+          
+
             var roles = await _userManager.GetRolesAsync(user);
 
             var jwtSection = _configuration.GetSection("Jwt");
@@ -60,7 +64,8 @@ namespace TrainingManagement.Auth.Services
                 signingKey,
                 issuer,
                 audience,
-                TimeSpan.FromMinutes(expiresMinutes));
+                TimeSpan.FromMinutes(expiresMinutes),
+                claims);
 
             var refreshToken = new RefreshToken
             {
@@ -108,6 +113,8 @@ namespace TrainingManagement.Auth.Services
                 return RefreshTokenResult<AppUser>.Fail("User not found.");
             }
 
+            //add user claim 
+            var claims = await _userManager.GetClaimsAsync(user);
             var roles = await _userManager.GetRolesAsync(user);
 
             var jwtSection = _configuration.GetSection("Jwt");
@@ -149,7 +156,8 @@ namespace TrainingManagement.Auth.Services
                 signingKey,
                 issuer,
                 audience,
-                TimeSpan.FromMinutes(expiresMinutes));
+                TimeSpan.FromMinutes(expiresMinutes),
+                claims);
 
             return RefreshTokenResult<AppUser>.Success(newAccessToken, newRefreshToken.Token, expiresAt, refreshExpiresAt, user);
         }
