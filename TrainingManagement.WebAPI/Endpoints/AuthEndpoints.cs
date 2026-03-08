@@ -1,7 +1,10 @@
-﻿using Carter;
+﻿using BuildingBlock.Util.Commons.Results;
+using Carter;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using TrainingManagement.Auth.Contracts;
 using TrainingManagement.WebAPI.Commons.Dtos;
+using TrainingManagement.WebAPI.Commons.Errors;
 
 namespace TrainingManagement.WebAPI.Endpoints;
 
@@ -9,10 +12,13 @@ public class AuthEndpoints : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        var appGroup = app.MapGroup("/api/auth")
+        var version = app.NewVersionedApi();
+        var appGroup = version.MapGroup("/api/v{version:apiVersion}/auth")
+            .HasApiVersion(1.0)
             .WithTags("Authentication");
 
         appGroup.MapPost("/", HandleLoginAsync)
+            .MapToApiVersion(1.0)
             .AllowAnonymous();
         appGroup.MapPost("/refresh", HandleRefreshAsync)
             .AllowAnonymous(); // Ensure this endpoint is also anonymous
@@ -24,21 +30,24 @@ public class AuthEndpoints : ICarterModule
         CancellationToken ct = default)
     {
        
-        
-
         var result = await service.LoginAsync(request.UserName, request.Password, ct);
-
-        if (result.Failed)
-        {
-            return Results.BadRequest(result.Errors);
+       
+        if (result.Failed) {
+            //return proper error response with details
+            var error = new Error("Invalid Credential", System.Net.HttpStatusCode.Unauthorized);
+            return ResultHandler
+                    .Handle(Result<AuthResponse>.Fail(HttpStatusCode.Unauthorized, error));
         }
 
-        return Results.Ok(new AuthResponse(
-            result.Token!,
-            result.Data?.UserName ?? string.Empty,
-            result.ExpiresAt?.UtcDateTime ?? DateTime.MinValue,
-            result.RefreshToken ?? string.Empty,
-            result.RefreshExpiresAt?.UtcDateTime ?? DateTime.MinValue));
+        var response = new AuthResponse(
+                result.Token!,
+                result.Data?.UserName ?? string.Empty,
+                result.ExpiresAt?.UtcDateTime ?? DateTime.MinValue,
+                result.RefreshToken ?? string.Empty,
+                result.RefreshExpiresAt?.UtcDateTime ?? DateTime.MinValue);
+
+        return ResultHandler
+                .Handle(Result<AuthResponse>.Success(response));
     }
 
     private static async Task<IResult> HandleRefreshAsync(

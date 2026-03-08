@@ -5,7 +5,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-    "code": "WIMASMC2",
+    "code": "STIMC",
     "email": "admin@wimas.com",
     "name": "WIMAS Marine Center",
     "address": "123 Main St",

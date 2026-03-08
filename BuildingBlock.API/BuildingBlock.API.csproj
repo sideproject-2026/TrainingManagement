@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\BuildingBlock.Util\BuildingBlock.Util.csproj" />
+  </ItemGroup>
+
+</Project>

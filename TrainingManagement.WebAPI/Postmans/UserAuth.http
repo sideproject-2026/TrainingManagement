@@ -3,12 +3,12 @@
 @TrainingManagement.WebAPI_HostAddress = http://localhost:5123
 
 ### Login
-POST {{TrainingManagement.WebAPI_HostAddress}}/api/auth
+POST {{TrainingManagement.WebAPI_HostAddress}}/api/v1/auth
 Content-Type: application/json
 
 {
-  "userName": "admin",
-  "password": "P@ssw0rd!"
+  "userName": "Admin@STIMC.com",
+  "password": "AdminSTIMC@123"
 }
 
 ### Refresh Token

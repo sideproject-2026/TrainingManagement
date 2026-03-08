@@ -3,14 +3,17 @@ using Scalar.AspNetCore;
 using TrainingManagement.Auth.Commons.Extensions;
 using TrainingManagement.WebAPI.Commons.Extensions;
 using TrainingManagement.Center.Commons.Extensions;
+using TrainingManagement.WebAPI.Commons.Errors;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
-
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+builder.Services.AddApiVersioning(opt => opt.ReportApiVersions = true);
 
 builder.Services
     .AddTMAuthService(builder.Configuration)

@@ -1,4 +1,5 @@
 ﻿using BuildingBlock.Util.Commons.Parameters;
+using BuildingBlock.Util.Commons.Results;
 using Carter;
 using Microsoft.AspNetCore.Mvc;
 using TrainingManagement.Auth.Contracts;
@@ -6,6 +7,7 @@ using TrainingManagement.Auth.Models;
 using TrainingManagement.Center.Contracts;
 using TrainingManagement.Center.Models;
 using TrainingManagement.WebAPI.Commons.Dtos;
+using TrainingManagement.WebAPI.Commons.Errors;
 
 namespace TrainingManagement.WebAPI.Endpoints;
 public class TrainingCenterEndpoint : ICarterModule
@@ -47,7 +49,7 @@ public class TrainingCenterEndpoint : ICarterModule
         
         var result = await service.CreateAsync(trainingCenter, ct);
         if (result.Failed) {
-            return Results.BadRequest(result.Errors);
+            return ResultHandler.Handle(result);
         }
 
         //create default admin user
@@ -63,7 +65,9 @@ public class TrainingCenterEndpoint : ICarterModule
         {
             //rollback training center creation
             await service.DeleteAsync(trainingCenterId, ct);
-            return Results.BadRequest(userResult.Errors);
+            
+            return ResultHandler.Handle(Result<bool>.Fail(System.Net.HttpStatusCode.BadRequest, userResult.Errors.ToArray()));
+            
         }
 
         return Results.Ok(result);

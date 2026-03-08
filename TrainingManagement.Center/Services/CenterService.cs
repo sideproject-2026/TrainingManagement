@@ -11,16 +11,24 @@ internal class CenterService(CenterDbContext context) : ICenterService
 {
     public async Task<Result<Guid>> CreateAsync(TrainingCenter trainingCenter, CancellationToken ct = default)
     {
-        
+        //check if exist
+        var isCodeExist = await context.TrainingCenters.AnyAsync(c => c.Code == trainingCenter.Code, ct);
+        if(isCodeExist) {   
+            return Result<Guid>.Fail(System.Net.HttpStatusCode.Conflict, $"Code {trainingCenter.Code} already exist");
+        }
+
         context.TrainingCenters.Add(trainingCenter);
         await context.SaveChangesAsync(ct);
         return Result<Guid>.Success(trainingCenter.Id);
-
-
     }
 
     public async Task<Result> DeleteAsync(Guid trainingCenterId, CancellationToken ct = default)
     {
+        var isCodeExist = await context.TrainingCenters.AnyAsync(c => c.Id == trainingCenterId, ct);
+        if(!isCodeExist) {   
+            return Result.Fail(System.Net.HttpStatusCode.NotFound, $"Training center with id {trainingCenterId} not found");
+        }
+
         await context.TrainingCenters
                 .Where(c => c.Id == trainingCenterId)
                 .ExecuteDeleteAsync(ct);
